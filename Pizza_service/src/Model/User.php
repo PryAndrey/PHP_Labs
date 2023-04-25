@@ -7,25 +7,25 @@ class User
     private ?int $userId;
     private string $firstName;
     private string $secondName;
-    private string $middleName;
-    private string $gender;
-    private string $birthDate;
     private string $email;
+    private string $password;
     private string $phone;
     private string $avatarPath;
 
     public function __construct(
-        ?int $userId, string $firstName, string $secondName,
-        string $middleName, string $gender, string $birthDate,
-        string $email, string $phone, string $avatarPath
+        ?int $userId,
+        string $firstName,
+        string $secondName,
+        string $email,
+        string $password,
+        string $phone,
+        string $avatarPath
     ) {
         $this->userId = $userId;
         $this->firstName = $firstName;
         $this->secondName = $secondName;
-        $this->middleName = $middleName;
-        $this->gender = $gender;
-        $this->birthDate = $birthDate;
         $this->email = $email;
+        $this->password = $password;
         $this->phone = $phone;
         $this->avatarPath = $avatarPath;
     }
@@ -45,24 +45,13 @@ class User
         return $this->secondName;
     }
 
-    public function getMiddleName(): string
-    {
-        return $this->middleName;
-    }
-
-    public function getGender(): string
-    {
-        return $this->gender;
-    }
-
-    public function getBirthDate(): string
-    {
-        return $this->birthDate;
-    }
-
     public function getEmail(): string
     {
         return $this->email;
+    }
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 
     public function getPhone(): string
@@ -73,6 +62,11 @@ class User
     public function getAvatarPath(): string
     {
         return $this->avatarPath;
+    }
+
+    public function getUploadUrlPath(string $fileName): string
+    {
+        return "/uploads/$fileName";
     }
 
 }

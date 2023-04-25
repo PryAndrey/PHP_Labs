@@ -17,9 +17,7 @@ class UserTable
     public function findUser(int $userId): ?User
     {
         $query = <<<SQL
-            SELECT
-                user_id, first_name, second_name, 
-                middle_name, gender, birth_date, email, phone, avatar_path
+            SELECT user_id, first_name, second_name, user_email, user_password, user_phone, user_avatar
             FROM user
             WHERE user_id = $userId
         SQL;
@@ -32,26 +30,21 @@ class UserTable
         return null;
     }
 
-    function saveUser(User $user): int
-    {
+    public function saveUser(User $user): int
+    { 
         $query = <<<SQL
-            INSERT INTO user  (first_name, second_name, 
-                middle_name, gender, birth_date, email, phone, avatar_path)
-            VALUES (:first_name, :second_name, :middle_name, :gender,
-                :birth_date, :email, :phone, :avatar_path
-                )
+            INSERT INTO user (first_name, second_name, user_email, user_password, user_phone, user_avatar)
+            VALUES (:first_name, :second_name, :user_email, :user_password, :user_phone, :user_avatar)
         SQL;
         try {
             $statement = $this->connection->prepare($query);
             $statement->execute([
                 ":first_name" => $user->getFirstName(),
                 ":second_name" => $user->getSecondName(),
-                ":middle_name" => $user->getMiddleName(),
-                ":gender" => $user->getGender(),
-                ":birth_date" => $user->getBirthDate(),
-                ":email" => $user->getEmail(),
-                ":phone" => $user->getPhone(),
-                ":avatar_path" => $user->getAvatarPath()
+                ":user_email" => $user->getEmail(),
+                ":user_password" => $user->getPassword(),
+                ":user_phone" => $user->getPhone(),
+                ":user_avatar" => $user->getAvatarPath()
             ]);
         } catch (\Exception $e) {
             echo "Такой пользователь уже существует";
@@ -66,8 +59,7 @@ class UserTable
     {
         return new User(
             (int) $row["user_id"], $row["first_name"], $row["second_name"],
-            $row["middle_name"], $row["gender"], $row["birth_date"],
-            $row["email"], $row["phone"], $row["avatar_path"]
+            $row["user_email"], $row["user_password"], $row["user_phone"], $row["user_avatar"]
         );
     }
 }

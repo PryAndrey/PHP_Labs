@@ -14,7 +14,6 @@ class Upload
 
     public function __construct()
     {
-
     }
 
     public function moveImageToUploads(array $fileInfo): string

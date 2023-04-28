@@ -22,4 +22,5 @@
 <h3>Pizza service:</h3>
 <ul>
   <li>1 итерация</li>
+  <li>twig шаблоны</li>
 </ul>

@@ -12,6 +12,8 @@ use App\Database\PizzaTable;
 use App\Model\User;
 use App\Model\Upload;
 use App\View\PhpTemplateEngine;
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
 
 class UserController extends AbstractController
 {
@@ -20,17 +22,22 @@ class UserController extends AbstractController
     // private PizzaTable $pizzaTable;
     private Upload $upload;
 
+    private Environment $twig;
     public function __construct()
     {
         $connection = ConnectionProvider::connectDatabase();
         $this->userTable = new UserTable($connection);
         // $this->pizzaTable = new PizzaTable($connection);
         $this->upload = new Upload();
+        $this->twig = new Environment(new FilesystemLoader("../templates"));
     }
 
     public function index(): Response
     {
-        $contents = PhpTemplateEngine::render('userForm.php');
+        // $contents = PhpTemplateEngine::render('userForm.php');
+
+        $contents = $this->twig->render("userForm.html.twig");
+
         return new Response($contents);
     }
 

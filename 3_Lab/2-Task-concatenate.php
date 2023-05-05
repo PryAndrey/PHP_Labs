@@ -1,5 +1,6 @@
 <?php
-function parseDictionaryFile($filepath): array
+declare(strict_types=1);
+function parseDictionaryFile(string $filepath): array
 {
     $dictionary = array();
 
@@ -20,13 +21,19 @@ function parseDictionaryFile($filepath): array
     return $dictionary;
 }
 
-function mergeDictionaries(array $dictories): string
+function mergeDictionaries(array $dictories): array
 {
     $mergedDict = [];
 
     for ($i = 0; $i < count($dictories); $i++) {
         $mergedDict = array_merge($mergedDict, parseDictionaryFile($dictories[$i]));
     }
+    return $mergedDict;
+}
+
+function sortDictionaries(array $dictories): string
+{
+    $mergedDict = mergeDictionaries($dictories);
 
     ksort($mergedDict);
     $text = "";

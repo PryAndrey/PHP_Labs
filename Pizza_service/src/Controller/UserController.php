@@ -6,10 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use App\Database\ConnectionProvider;
-use App\Database\UserTable;
-use App\Database\PizzaTable;
-use App\Model\User;
+use App\Repository\UserRepository;
+use App\Entity\User;
 use App\Model\Upload;
 use App\View\PhpTemplateEngine;
 use Twig\Loader\FilesystemLoader;
@@ -17,36 +15,26 @@ use Twig\Environment;
 
 class UserController extends AbstractController
 {
-    // private const HTTP_STATUS_303_SEE_OTHER = 303;
-    private UserTable $userTable;
-    // private PizzaTable $pizzaTable;
+    private UserRepository $userRepository;
     private Upload $upload;
-
     private Environment $twig;
-    public function __construct()
+
+    public function __construct(UserRepository $userRepository)
     {
-        $connection = ConnectionProvider::connectDatabase();
-        $this->userTable = new UserTable($connection);
-        // $this->pizzaTable = new PizzaTable($connection);
+        $this->userRepository = $userRepository;
         $this->upload = new Upload();
         $this->twig = new Environment(new FilesystemLoader("../templates"));
     }
 
     public function index(): Response
     {
-        // $contents = PhpTemplateEngine::render('userForm.php');
-
         $contents = $this->twig->render("userForm.html.twig");
-
         return new Response($contents);
     }
 
     public function registerUser(Request $request): Response
     {
-        $userAvatar = null;
-        if ($_FILES["avatar_path"] !== null) {
-            $userAvatar = $this->upload->moveImageToUploads($_FILES["avatar_path"]);
-        }
+        $userAvatar = $_FILES["avatar_path"] !== null ? $this->upload->moveImageToUploads($_FILES["avatar_path"]) : null;
 
         $user = new User(
             null,
@@ -57,7 +45,7 @@ class UserController extends AbstractController
             $request->get('phone'),
             $userAvatar
         );
-        $userId = $this->userTable->saveUser($user);
+        $userId = $this->userRepository->store($user);
 
         return $this->redirectToRoute(
             'show_catalog',
@@ -69,7 +57,7 @@ class UserController extends AbstractController
 
     public function showUser(int $userId): Response
     {
-        $user = $this->userTable->findUser($userId);
+        $user = $this->userRepository->findById($userId);
         if (!$user) {
             throw $this->createNotFoundException();
         }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                      https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+  <entity name="App\Entity\Pizza" table="pizza">
+
+    <id name="pizzaId" type="integer" column="pizza_id">
+      <generator strategy="IDENTITY" />
+    </id>
+
+    <field name="pizzaTitle" column="pizza_title" type="string" length="40" nullable="false" />
+    <field name="pizzaCost" column="pizza_cost" type="integer" length="200" nullable="false" />
+    <field name="pizzaDescription" column="pizza_description" type="string" length="500" nullable="true" />
+    <field name="pizzaStructure" column="pizza_structure" type="string" length="500" nullable="false" />
+    <field name="pizzaImage" column="pizza_image" type="string" length="500" nullable="true" />
+
+  </entity>
+
+</doctrine-mapping>

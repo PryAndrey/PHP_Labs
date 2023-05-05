@@ -1,34 +1,19 @@
 <?php
 
-namespace App\Model;
+namespace App\Entity;
 
 class User
 {
-    private ?int $userId;
-    private string $firstName;
-    private string $secondName;
-    private string $email;
-    private string $password;
-    private string $phone;
-    private string $avatarPath;
-
     public function __construct(
-        ?int $userId,
-        string $firstName,
-        string $secondName,
-        string $email,
-        string $password,
-        string $phone,
-        string $avatarPath
-    ) {
-        $this->userId = $userId;
-        $this->firstName = $firstName;
-        $this->secondName = $secondName;
-        $this->email = $email;
-        $this->password = $password;
-        $this->phone = $phone;
-        $this->avatarPath = $avatarPath;
-    }
+        private ?int $userId,
+        private string $firstName,
+        private string $secondName,
+        private string $email,
+        private string $password,
+        private string $phone,
+        private string $avatarPath,
+        private bool $adminPrivilege = false
+    ) { }
 
     public function getUserId(): ?int
     {

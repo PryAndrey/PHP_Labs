@@ -9,4 +9,6 @@
 <h3>Pizza service:</h3>
 <ul>
   <li>1 итерация</li>
+  <li>Doctrine</li>
+  <li>Image uploading</li>
 </ul>

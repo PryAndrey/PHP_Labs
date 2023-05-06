@@ -16,4 +16,9 @@ show_user:
 show_catalog:
     path: /catalog/{userId}
     methods: GET
-    controller: App\Controller\StorefrontController::showCatalog
+    controller: App\Controller\StorefrontController::listPizzas
+
+list_users:
+    path: /user/list/all
+    methods: GET
+    controller: App\Controller\userController::listUsers

@@ -43,6 +43,26 @@ class UserService implements UserServiceInterface
       $user->getPassword(),
       $user->getPhone(),
       $user->getAvatarPath(),
+      $user->getRole(),
+    );
+  }
+  public function getUserByEmail(string $email): UserData|null
+  {
+    $userRepository = $this->userRepository;
+    $user = $this->userRepository->findByEmail($email);
+    if ($user === null) {
+      return null;
+    }
+
+    return new UserData(
+      $user->getUserId(),
+      $user->getFirstName(),
+      $user->getSecondName(),
+      $user->getEmail(),
+      $user->getPassword(),
+      $user->getPhone(),
+      $user->getAvatarPath(),
+      $user->getRole(),
     );
   }
   public function deleteUser(int $userId): void
@@ -68,6 +88,7 @@ class UserService implements UserServiceInterface
         $user->getPassword(),
         $user->getPhone(),
         $user->getAvatarPath(),
+        $user->getRole(),
       );
     }
 

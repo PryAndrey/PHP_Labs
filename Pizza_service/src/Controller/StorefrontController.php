@@ -25,25 +25,16 @@ class StorefrontController extends AbstractController
     {
         $this->pizzaService = $pizzaService;
         $this->userService = $userService;
+        $this->orderService = $orderService;
         $this->imageService = $imageService;
         $this->twig = new Environment(new FilesystemLoader("../templates"));
     }
 
-    public function registerPizza(Request $request): Response
+    public function createPizzaForm(Request $request): Response
     {
-        $pizzaImage = isset($_FILES["pizza_image"]) ? $this->imageService->moveImageToUploads($_FILES["pizza_image"]) : null;
-
-        $pizzaId = $this->pizzaService->savePizza(
-            $request->get('pizza_title'),
-            $request->get('pizza_cost'),
-            $request->get('pizza_description'),
-            $request->get('pizza_structure'),
-            $pizzaImage
-        );
-
-        return $this->redirectToRoute('show_catalog');
+        $contents = $this->twig->render("./form/createPizza.html.twig", []);
+        return new Response($contents);
     }
-
     public function showPizza(int $pizzaId): Response
     {
         $pizza = $this->pizzaService->getPizza($pizzaId);
@@ -52,20 +43,48 @@ class StorefrontController extends AbstractController
         ]);
     }
 
+    public function createPizza(Request $request): Response
+    {
+        $pizzaTitle = $request->get("pizza_title");
+        if ($this->pizzaService->getPizzaByTitle($pizzaTitle) !== null) {
+            return $this->redirectToRoute("create_pizza_form", [], Response::HTTP_SEE_OTHER);
+        }
+
+        if (!isset($_FILES["pizza_image"])) {
+            return $this->redirectToRoute("create_pizza_form", [], Response::HTTP_SEE_OTHER);
+        }
+
+        $pizzaImage = $this->imageService->moveImageToUploads($_FILES["pizza_image"], 'pizza');
+        $pizzaId = $this->pizzaService->savePizza(
+            $request->get('pizza_title'),
+            (int) $request->get('pizza_cost'),
+            $request->get('pizza_description'),
+            $request->get('pizza_structure'),
+            $pizzaImage
+        );
+        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+    }
+
     public function deletePizza(int $pizzaId): Response
     {
         $this->pizzaService->deletePizza($pizzaId);
-        return $this->redirectToRoute('pizzas_list');
+        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 
-
-    public function listPizzas(int $userId): Response
+    public function listPizzas(): Response
     {
-        $user = $this->userService->getUser($userId);
+        session_start();
+        // session_unset();
+        if (!isset($_SESSION['email'])) {
+            return $this->redirectToRoute("login_form");
+        }
+        $user = $this->userService->getUserByEmail($_SESSION['email']);
+        if ($user === null) {
+            return $this->redirectToRoute("login_form");
+        }
         $pizzas = $this->pizzaService->listPizzas();
 
-        return $this->render('showCatalog.html.twig', [
-            "title" => "Pizza service",
+        return $this->render('pizza/catalog.html.twig', [
             "pizzas_list" => $pizzas,
             "user" => $user
         ]);

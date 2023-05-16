@@ -6,18 +6,19 @@
   padding: 20px;
   border: 5px solid #A7ED43;
   border-radius: 24px;
-  width: 50%;
+  width: 30%;
 }
 
-.registerBlock {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
 
 form {
   display: flex;
-  flex-direction: column;
+  flex-direction: column;width: 100%;
+}
+
+.formItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 input {

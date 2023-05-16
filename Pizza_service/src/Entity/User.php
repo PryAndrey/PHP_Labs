@@ -12,7 +12,7 @@ class User
         private string $password,
         private string $phone,
         private string $avatarPath,
-        private bool $adminPrivilege = false
+        private int $role = 1
     ) { }
 
     public function getUserId(): ?int
@@ -42,6 +42,10 @@ class User
     public function getPhone(): string
     {
         return $this->phone;
+    }
+    public function getRole(): int
+    {
+        return $this->role;
     }
 
     public function getAvatarPath(): string

@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	<title>Регистрация</title>
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" type="text/css" href="styles/userFormStyle.css"/>
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+	<main class="formContainerWrapper">
+		<h2>Регистрация</h2>
+		<form enctype="multipart/form-data" action="/registration" method="post">
+			<div class="formItem">
+				<p>Фамилия :
+				</p><input type="text" name="second_name" required></div>
+			<div class="formItem">
+				<p>Имя :
+				</p><input type="text" name="first_name" required/></div>
+			<div class="formItem">
+				<p>Email :
+				</p><input type="text" name="email" required/></div>
+			<div class="formItem">
+				<p>Пароль :</p><input type="password" name="password" required/></div>
+			<div class="formItem">
+				<p>Телефон :
+				</p><input type="text" name="phone"/></div>
+			<p>Аватар :
+			</p><input type="file" name="avatar_path" accept="image/jpeg, image/png, image/webp"/>
+			<input class="submit" type="submit" value="Зарегистрироваться">
+		</form>
+		<form action="/login_form" method="post">
+
+			<input class="submit" type="submit" value="Войти">
+		</form>
+
+	</main>
+{% endblock %}
+
+{% block footer %}{% endblock %}

@@ -4,6 +4,7 @@ USE php_course;
 
 drop table user;
 drop table pizza;
+drop table pizza_order;
 
 CREATE TABLE user (
   user_id         INT UNSIGNED AUTO_INCREMENT,
@@ -13,22 +14,13 @@ CREATE TABLE user (
   user_password   VARCHAR(100) NOT NULL,
   user_phone      VARCHAR(20),
   user_avatar     VARCHAR(500),
-  admin_privilege BIT DEFAULT 0 NOT NULL,
+  user_role 	  INT UNSIGNED NOT NULL,
   PRIMARY KEY (user_id)
 );
 
-INSERT INTO user (first_name, second_name, user_email, user_password, user_phone, user_avatar, admin_privilege)
-VALUES ('Andrey', 'Pryashnikov', 'prand@yandex.ru', '1234', '12345678', '', 1),
-('Andrey0', 'Pryashnikov0', 'prand0@yandex.ru', '1234', '12345678', '', 1);
-
--- CREATE TABLE pizza_order1 (
---  order_id INT UNSIGNED AUTO_INCREMENT,
---  order_pizza ARRAY <INT UNSIGNED>,
---  order_client INT UNSIGNED,
---  order_time DATETIME,
---  order_delivered BIT DEFAULT 0
---  PRIMARY KEY (order_id)
--- );
+INSERT INTO user (first_name, second_name, user_email, user_password, user_phone, user_avatar, user_role)
+VALUES ('Andrey', 'Pryashnikov', 'prand@yandex.ru', '1234', '12345678', '', 2),
+('Andrey0', 'Pryashnikov0', 'prand0@yandex.ru', '1234', '12345678', '', 2);
 
 CREATE TABLE pizza (
   pizza_id          INT UNSIGNED AUTO_INCREMENT,
@@ -46,4 +38,13 @@ VALUES ('Маргарита', 250, 'Вкусная', 'Сыр, колбаса, о
 ('Мясная', 250, 'Вкусная', 'Сыр, колбаса, оливки, курица, помидоры.', 'pizza3.png'),
 ('Пепперони', 250, 'Вкусная', 'Сыр, колбаса, оливки, курица, помидоры.', 'pizza4.png'),
 ('Гавайская', 250, 'Вкусная', 'Сыр, колбаса, оливки, курица, помидоры.', 'pizza5.png');
+
+CREATE TABLE pizza_order (
+ order_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ order_pizza VARCHAR(500),
+ order_client INT UNSIGNED,
+ order_time DATETIME,
+ order_address VARCHAR(200),
+ order_delivered INT UNSIGNED NOT NULL
+);
 

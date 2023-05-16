@@ -1,0 +1,12 @@
+<div class="footer__links">
+	<nav class="navigation footer__navigation">
+<a href="{{ path('home') }}" class="navigation__link navigation__link_uppercase navigation__link_white">Home</a>
+
+		<a href="{{ path('home') }}" class="navigation__link navigation__link_uppercase navigation__link_white">Категории</a>
+		{% if user.getRole() == 2 %}
+<a class="nav-link" href="{{ path('create_pizza_form') }}">Добавить пиццу</a>
+
+		{% endif %}
+	</nav>
+</div>
+

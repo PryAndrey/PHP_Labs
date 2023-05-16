@@ -1,0 +1,18 @@
+<header class="header__links">
+	<nav class="">
+		<a href="{{ path('home') }}">
+			<img src="{{ absolute_url('../uploads/logo.png') }}" height="20px" alt="logo"/>
+		</a>
+		<a href="{{ path('home') }}" class="navigation__link navigation__link_uppercase navigation__link_white">Home</a>
+		<a href="{{ path('home') }}" class="navigation__link navigation__link_uppercase navigation__link_white">Категории</a>
+
+		{% if user == null %}
+			<a class="nav-link" href="{{ path('registration_form') }}">Регистрация</a>
+			<a class="nav-link" href="{{ path('login_form') }}">Войти</a>
+		{% else %}
+			<a class="nav-link" href="{{ path('logout') }}">Logout</a>
+
+		{% endif %}
+	</nav>
+	{% include 'user/user_info.html.twig'%}
+</header>

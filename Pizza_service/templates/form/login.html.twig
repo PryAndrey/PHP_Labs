@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	<title>Вход</title>
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" type="text/css" href="styles/userFormStyle.css"/>
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+	<main class="formContainerWrapper">
+		<h2>Авторизация</h2>
+		<form enctype="multipart/form-data" action="/login" method="post">
+			<p>Email :</p>
+			<input type="text" name="email" required/>
+			<p>Пароль :</p>
+			<input type="password" name="password" required/>
+			<input class="submit" type="submit" value="Отправить">
+		</form>
+		<form action="/register_form" method="post">
+			<input class="submit" type="submit" value="Зарегистрироваться">
+		</form>
+	</main>
+{% endblock %}
+
+{% block footer %}{% endblock %}

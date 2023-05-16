@@ -1,0 +1,13 @@
+<div class="profile">
+	<div class="profile_info">
+		<p>
+			{{user.getSecondName() ~ " " ~ user.getFirstName() }}
+		</p>
+		<p>
+			{{user.getEmail()}}
+		</p>
+	</div>
+	{% if user.getAvatarPath() != null %}
+		<img class="profile_avatar" src="{{user.getUploadUrlPath(user.getAvatarPath())}}" alt="{{user.getAvatarPath()}}">
+	{% endif %}
+</div>

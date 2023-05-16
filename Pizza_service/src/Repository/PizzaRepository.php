@@ -19,7 +19,12 @@ class PizzaRepository
 
     public function findById(int $id): ?Pizza
     {
-        return $this->repository->findOneBy(["pizza_id" => (string) $id]);
+        return $this->repository->findOneBy(["pizzaId" => (int) $id]);
+    }
+
+    public function findByTitle(string $title): ?Pizza
+    {
+        return $this->repository->findOneBy(["pizzaTitle" => $title]);
     }
 
     public function store(Pizza $pizza): int

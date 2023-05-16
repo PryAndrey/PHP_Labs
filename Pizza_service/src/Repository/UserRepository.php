@@ -21,6 +21,10 @@ class UserRepository
     {
         return $this->repository->findOneBy(["userId" => (string) $id]);
     }
+    public function findByEmail(string $email): ?User
+    {
+        return $this->repository->findOneBy(["email" => $email]);
+    }
 
     public function store(User $user): int
     {

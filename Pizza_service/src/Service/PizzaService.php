@@ -42,6 +42,24 @@ class PizzaService implements PizzaServiceInterface
       $pizza->getPizzaImage(),
     );
   }
+
+  public function getPizzaByTitle(string $title): PizzaData|null
+  {
+    $pizza = $this->pizzaRepository->findByTitle($title);
+    if ($pizza === null) {
+      return null;
+    }
+
+    return new PizzaData(
+      $pizza->getPizzaId(),
+      $pizza->getPizzaTitle(),
+      $pizza->getPizzaCost(),
+      $pizza->getPizzaDescription(),
+      $pizza->getPizzaStructure(),
+      $pizza->getPizzaImage(),
+    );
+  }
+
   public function deletePizza(int $pizzaId): void
   {
     $pizza = $this->pizzaRepository->findById($pizzaId);

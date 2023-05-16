@@ -1,24 +1,71 @@
-index:
-    path: /
-    methods: GET
-    controller: App\Controller\UserController::index
-
-add_user:
-    path: /user/publish
-    methods: POST
-    controller: App\Controller\UserController::registerUser
-
-show_user:
-    path: /user/{userId}
-    methods: GET
-    controller: App\Controller\UserController::showUser
-
-show_catalog:
-    path: /catalog/{userId}
+home:
+    path: /home
     methods: GET
     controller: App\Controller\StorefrontController::listPizzas
 
-list_users:
-    path: /user/list/all
+registration_form:
+    path: /register_form
+    methods: POST
+    controller: App\Controller\UserController::showRegistrationForm
+
+login_form:
+    path: /login_form
+    controller: App\Controller\UserController::showLoginForm
+
+registration:
+    path: /registration
+    controller: App\Controller\UserController::registerUser
+
+login:
+    path: /login
+    controller: App\Controller\UserController::loginUser
+
+logout:
+    path: /logout
+    controller: App\Controller\UserController::logout
+
+
+create_pizza_form:
+    path: /pizza/form
+    controller: App\Controller\StorefrontController::createPizzaForm
+
+create_pizza:
+    path: /create_pizza
+    controller: App\Controller\StorefrontController::createPizza
+
+
+
+add_pizza:
+    path: /pizza/buy
+    methods: POST
+    controller: App\Controller\StorefrontController::addPizza
+
+remove_pizza:
+    path: /pizza/buy
+    methods: POST
+    controller: App\Controller\StorefrontController::removePizza
+
+
+show_pizza:
+    path: /pizza/{pizzaId}
     methods: GET
-    controller: App\Controller\userController::listUsers
+    controller: App\Controller\StorefrontController::viewPizza
+
+delete_pizza:
+    path: /pizza/{pizzaId}/delete
+    methods: GET
+    controller: App\Controller\StorefrontController::deletePizza
+
+
+
+show_home_index: 
+    path: /index
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+    defaults:
+        route: home
+
+show_home_empty: 
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+    defaults:
+        route: home

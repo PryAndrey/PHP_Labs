@@ -13,7 +13,7 @@ class UserData
     private string $password,
     private string $phone,
     private string $avatarPath,
-    private bool $adminPrivilege = false
+    private int $role = 1
   ) {
   }
 
@@ -47,7 +47,11 @@ class UserData
   }
   public function getUploadUrlPath(string $fileName): string
   {
-    return "/uploads/$fileName";
+    return "/uploads/user/$fileName";
+  }
+  public function getRole(): int
+  {
+    return $this->role;
   }
   public function toArray(): array
   {

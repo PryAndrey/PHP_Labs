@@ -16,7 +16,7 @@
         <field name="password" column="user_password" type="string" length="100" nullable="false" />
         <field name="phone" column="user_phone" type="string" length="20" nullable="true" />
         <field name="avatarPath" column="user_avatar" type="string" length="500" nullable="true" />
-        <field name="adminPrivilege" column="admin_privilege" type="boolean" length="100" nullable="false" />
+        <field name="role" column="user_role" type="integer" nullable="false" />
 
     </entity>
 

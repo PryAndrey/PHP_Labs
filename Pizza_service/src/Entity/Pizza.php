@@ -44,7 +44,7 @@ class Pizza
 
     public function getUploadUrlPath(string $fileName): string
     {
-        return "/images/$fileName";
+        return "/uploads/pizza/$fileName";
     }
 
 }

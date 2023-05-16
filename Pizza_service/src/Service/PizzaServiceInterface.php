@@ -9,9 +9,9 @@ interface PizzaServiceInterface
 {
   public function savePizza(string $pizzaTitle, int $pizzaCost, string $pizzaDescription, string $pizzaStructure, ?string $pizzaImage): int;
 
-  public function getPizza(int $userId): PizzaData;
-
-  public function deletePizza(int $userId): void;
+  public function getPizza(int $pizzaId): PizzaData;
+  public function getPizzaByTitle(string $title): PizzaData|null;
+  public function deletePizza(int $pizzaId): void;
 
   public function listPizzas(): array;
 }

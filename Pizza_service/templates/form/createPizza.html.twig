@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	<title>Создание пиццы</title>
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" type="text/css" href="styles/userFormStyle.css"/>
+{% endblock %}
+
+{% block header %}
+	{# {% include 'createPizzaHeader.html.twig'%} #}
+{% endblock %}
+
+{% block content %}
+	<main class="formContainerWrapper">
+		<h2>Создание пиццы</h2>
+		<form enctype="multipart/form-data" action="/create_pizza" method="post">	
+
+			<div class="formItem">
+				<p>Название :
+				</p><input type="text" name="pizza_title" required>
+			</div>
+			<div class="formItem">
+				<p>Цена :
+				</p><input type="text" name="pizza_cost" required/>
+			</div>
+			<div class="formItem">
+				<p>Структура :
+				</p><input type="text" name="pizza_structure" required/>
+			</div>
+			<div class="formItem">
+				<p>Описание :
+				</p><input type="text" name="pizza_description" required/>
+			</div>
+			<p>Изображение :
+			</p><input type="file" name="pizza_image" accept="image/jpeg, image/png, image/webp"/>
+			<input class="submit" type="submit" value="Создать">
+		</form>
+	</main>
+{% endblock %}
+{% block footer %}{% endblock %}

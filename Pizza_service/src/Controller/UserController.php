@@ -27,13 +27,31 @@ class UserController extends AbstractController
 
     public function index(): Response
     {
-        $contents = $this->twig->render("userForm.html.twig");
+        return $this->redirectToRoute('home');
+    }
+
+    public function showLoginForm(): Response
+    {
+        $contents = $this->twig->render("./form/login.html.twig", []);
+        return new Response($contents);
+    }
+
+    public function showRegistrationForm(): Response
+    {
+        $contents = $this->twig->render("./form/registration.html.twig", []);
         return new Response($contents);
     }
 
     public function registerUser(Request $request): Response
     {
-        $userAvatar = isset($_FILES["avatar_path"]) ? $this->imageService->moveImageToUploads($_FILES["avatar_path"]) : null;
+        //session_start();
+
+        $userAvatar = isset($_FILES["avatar_path"]) ? $this->imageService->moveImageToUploads($_FILES["avatar_path"], 'user') : null;
+
+        $userEmail = $request->get("email");
+        if ($this->userService->getUserByEmail($userEmail) !== null) {
+            return $this->redirectToRoute("registration_form", [], Response::HTTP_SEE_OTHER);
+        }
 
         $userId = $this->userService->saveUser(
             $request->get('first_name'),
@@ -44,17 +62,46 @@ class UserController extends AbstractController
             $userAvatar
         );
 
+        $_SESSION['email'] = $userEmail;
         return $this->redirectToRoute(
-            'show_catalog',
-            ['userId' => $userId],
+            'home',
+            [],
             Response::HTTP_SEE_OTHER
         );
     }
 
+    public function loginUser(Request $request): Response
+    {
+        //session_start();
+
+        $userEmail = $request->get("email");
+        $userPassword = $request->get("password");
+        $user = $this->userService->getUserByEmail($userEmail);
+
+        if ($user === null) {
+            return $this->redirectToRoute("login_form", [], Response::HTTP_SEE_OTHER);
+        }
+
+        if (!$user->getPassword() === $userPassword) {
+            return $this->redirectToRoute("login_form", [], Response::HTTP_SEE_OTHER);
+        }
+
+        $_SESSION["email"] = $userEmail;
+        return $this->redirectToRoute("home", [], Response::HTTP_SEE_OTHER);
+    }
+
+    public function logout(): Response
+    {
+        session_start();
+        $_SESSION["email"] = null;
+        return $this->redirectToRoute("login_form", [], Response::HTTP_SEE_OTHER);
+    }
+
+
     public function showUser(int $userId): Response
     {
         $user = $this->userService->getUser($userId);
-        
+
         $contents = PhpTemplateEngine::render('showUser.php', [
             'user' => $user
         ]);

@@ -9,7 +9,7 @@ class Order
         private string $orderProducts,
         private int $orderCost,
         private int $orderClient,
-        private \DateTimeImmutable $orderTime,
+        private string $orderTime,
         private string $orderAddress,
         private ?int $orderDelivered = 0
     ) {
@@ -31,7 +31,7 @@ class Order
     {
         return $this->orderClient;
     }
-    public function getOrderTime(): \DateTimeImmutable
+    public function getOrderTime(): string
     {
         return $this->orderTime;
     }

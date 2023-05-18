@@ -8,6 +8,7 @@ function addProduct(pizzaTitle, pizzaCost) {
   } else {
     products.set(pizzaTitle, 1)
   }
+  document.getElementById(pizzaTitle).innerHTML = "В корзине: " + products.get(pizzaTitle)
   cost += pizzaCost
   console.log(products)
 }
@@ -15,8 +16,10 @@ function deleteProduct(pizzaTitle, pizzaCost) {
   if (products.has(pizzaTitle)) {
     if (products.get(pizzaTitle) === 1) {
       products.delete(pizzaTitle)
+      document.getElementById(pizzaTitle).innerHTML = "В корзине: 0"
     } else {
       products.set(pizzaTitle, products.get(pizzaTitle) - 1)
+      document.getElementById(pizzaTitle).innerHTML = "В корзине: " + products.get(pizzaTitle)
     }
     cost -= pizzaCost
   }
@@ -24,7 +27,6 @@ function deleteProduct(pizzaTitle, pizzaCost) {
 }
 
 function orderForm() {
-  //document.getElementById("orderForm").classList.add('visible');
   document.getElementById("orderForm").classList.remove('unVisible');
   productString = ""
   for (let pair of products.entries()) {
@@ -37,14 +39,10 @@ function orderForm() {
 async function sendOrder(userId) {
   let adress = document.getElementById("orderAddress").value;
 
-  var time = new Date();
-  var localTime = time.toLocaleTimeString();
-
   order = {
     "products": productString,
     "cost": cost,
     "client": userId,
-    "time": localTime,
     "address": adress,
   }
   console.log(order)
@@ -56,6 +54,11 @@ async function sendOrder(userId) {
     body: JSON.stringify(order)
   });
 
-  let result = await response.json();
-  alert(result);
+  document.getElementById("orderForm").classList.add('unVisible');
+  productString = ""
+  products.clear()
+  cost = 0
+  document.getElementById("products").innerHTML = "Продукты: -"
+  document.getElementById("cost").innerHTML = "Цена: 0Руб"
+  document.getElementById("orderAddress").value = ""
 }

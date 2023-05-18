@@ -15,7 +15,7 @@ class OrderService implements OrderServiceInterface
     $this->orderRepository = $orderRepository;
   }
   
-  public function saveOrder(string $orderProducts, int $orderCost, int $orderClient, \DateTimeImmutable $orderTime, string $orderAddress): int
+  public function saveOrder(string $orderProducts, int $orderCost, int $orderClient, string $orderTime, string $orderAddress): int
   {
     $order = new Order(
       null,
@@ -24,7 +24,7 @@ class OrderService implements OrderServiceInterface
       $orderClient,
       $orderTime,
       $orderAddress,
-      null
+      0
     );
     return $this->orderRepository->store($order);
   }

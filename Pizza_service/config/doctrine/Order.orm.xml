@@ -13,7 +13,7 @@
     <field name="orderProducts" column="order_pizza" type="string" length="500" nullable="false" />
     <field name="orderClient" column="order_client" type="integer" length="200" nullable="false" />
     <field name="orderCost" column="order_cost" type="integer" length="500" nullable="true" />
-    <field name="orderTime" column="order_time" type="time" length="500" nullable="false" />
+    <field name="orderTime" column="order_time" type="string" length="500" nullable="false" />
     <field name="orderAddress" column="order_address" type="string" length="200" nullable="false" />
     <field name="orderDelivered" column="order_delivered" type="integer" length="500"
       nullable="true" />

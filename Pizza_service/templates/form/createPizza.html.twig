@@ -6,7 +6,8 @@
 
 {% block stylesheets %}
 	{{parent()}}
-	<link rel="stylesheet" type="text/css" href="styles/userFormStyle.css"/>
+	<link rel="stylesheet" type="text/css" href="../styles/userFormStyle.css"/>
+
 {% endblock %}
 
 {% block header %}
@@ -16,7 +17,7 @@
 {% block content %}
 	<main class="formContainerWrapper">
 		<h2>Создание пиццы</h2>
-		<form enctype="multipart/form-data" action="/create_pizza" method="post">	
+		<form enctype="multipart/form-data" action="/create_pizza" method="post">
 
 			<div class="formItem">
 				<p>Название :

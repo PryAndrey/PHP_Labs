@@ -1,21 +1,37 @@
 <header class="header__links">
 	<nav class="">
 		<a href="{{ path('home') }}">
-			<img src="{{ absolute_url('../uploads/logo.png') }}" height="20px" alt="logo"/>
+			<img src="{{ absolute_url('../uploads/logo.png') }}" height="40px" alt="logo"/>
 		</a>
-		<a href="{{ path('home') }}" class="navigation__link navigation__link_uppercase navigation__link_white">Home</a>
-		<a href="{{ path('home') }}" class="navigation__link navigation__link_uppercase navigation__link_white">Категории</a>
+		<a href="{{ path('home') }}">Home</a>
+		<a href="{{ path('home') }}">Категории</a>
 
 		{% if user == null %}
-			<a class="nav-link" href="{{ path('registration_form') }}">Регистрация</a>
-
-			<a class="nav-link" href="{{ path('login_form') }}">Войти</a>
+			<a href="{{ path('registration_form') }}">Регистрация</a>
+			<a href="{{ path('login_form') }}">Войти</a>
 		{% else %}
 			{% if user.getRole() == 2 %}
-				<a class="nav-link" href="{{ path('create_pizza_form') }}">Добавить пиццу</a>
+				<a href="{{ path('create_pizza_form') }}">Добавить пиццу</a>
 
 			{% endif %}
-			<a class="nav-link" href="{{ path('logout') }}">Logout</a>
+			<a href="{{ path('logout') }}">Logout</a>
+			<button onclick="orderForm();">Собрать заказ</button>
+
+			<div id="orderForm" class="formContainerWrapper">
+				<h2>Создание заказа</h2>
+				<p id="products">Продукты:
+				</p>
+				<p id="cost">Цена :
+				</p>
+				<form>
+					<div class="formItem">
+						<p>Адресс:</p>
+						<input type="text" name="orderAddress" id="orderAddress" required>
+					</div>
+					<input onclick="sendOrder({{user.getUserId()}});" type="button" id="sendButton" value="Создать">
+				</form>
+
+			</div>
 
 		{% endif %}
 	</nav>

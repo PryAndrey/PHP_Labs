@@ -4,6 +4,7 @@
 	{{ parent() }}
 	<link rel="stylesheet" href="../styles/pizzaCatalogStyle.css">
 	<link rel="stylesheet" href="../styles/pizzaWrapperStyle.css">
+	<script type="text/javascript" src="script.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -27,30 +28,23 @@
 							{{pizza.getPizzaCost()}}
 						</h2>
 					</div>
+
 					<div>
-						{% if basket != null %}
-							{% for product in basket %}
-								{% if product == pizza %}
-									<a href="{{ path('remove_pizza', {pizzaId: pizza.getPizzaId() }) }}">В корзине</a>
-								{% endif %}
-							{% endfor %}
+						{% if user != null %}
+							{% if pizza != null %}
+								<button onclick="addProduct('{{pizza.getPizzaTitle()}}',{{pizza.getPizzaCost()}});">Добавить</button>
+								<button onclick="deleteProduct('{{pizza.getPizzaTitle()}}',{{pizza.getPizzaCost()}});">Отменить</button>
+							{% endif %}
 						{% else %}
-							{% if user != null %}
-								<a href="{{ path('add_pizza', {pizzaId: pizza.getPizzaId() }) }}">Заказать</a>
-							{% else %}
-								<a href="{{ path('login') }}">Необходимо авторизироваться</a>
-							{% endif %}
-
-							{% if user.getRole() == 2 %}
-								<a href="{{ path('delete_pizza', {pizzaId: pizza.getPizzaId() }) }}">Удалить</a>
-							{% endif %}
+							<a href="{{ path('login') }}">Необходимо авторизироваться</a>
 						{% endif %}
-
-
+						{% if user.getRole() == 2 %}
+							<a href="{{ path('delete_pizza', {pizzaId: pizza.getPizzaId() }) }}">Удалить</a>
+						{% endif %}
 					</div>
-
 				</div>
 			{% endfor %}
+
 		</div>
 	</main>
 {% endblock %}

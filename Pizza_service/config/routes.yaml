@@ -27,6 +27,7 @@ logout:
 
 create_pizza_form:
     path: /pizza/form
+    methods: GET
     controller: App\Controller\StorefrontController::createPizzaForm
 
 create_pizza:
@@ -35,15 +36,11 @@ create_pizza:
 
 
 
-add_pizza:
-    path: /pizza/buy
+create_order:
+    path: /order/create
     methods: POST
-    controller: App\Controller\StorefrontController::addPizza
+    controller: App\Controller\StorefrontController::createOrder
 
-remove_pizza:
-    path: /pizza/buy
-    methods: POST
-    controller: App\Controller\StorefrontController::removePizza
 
 
 show_pizza:

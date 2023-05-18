@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Service\UserServiceInterface;
 use App\Service\PizzaServiceInterface;
+use App\Service\OrderServiceInterface;
 use App\Service\ImageServiceInterface;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,10 +19,11 @@ class StorefrontController extends AbstractController
 {
     private PizzaServiceInterface $pizzaService;
     private UserServiceInterface $userService;
+    private OrderServiceInterface $orderService;
     private ImageServiceInterface $imageService;
     private Environment $twig;
 
-    public function __construct(PizzaServiceInterface $pizzaService, UserServiceInterface $userService, ImageServiceInterface $imageService)
+    public function __construct(PizzaServiceInterface $pizzaService, UserServiceInterface $userService, OrderServiceInterface $orderService, ImageServiceInterface $imageService)
     {
         $this->pizzaService = $pizzaService;
         $this->userService = $userService;
@@ -35,6 +37,7 @@ class StorefrontController extends AbstractController
         $contents = $this->twig->render("./form/createPizza.html.twig", []);
         return new Response($contents);
     }
+
     public function showPizza(int $pizzaId): Response
     {
         $pizza = $this->pizzaService->getPizza($pizzaId);
@@ -43,6 +46,17 @@ class StorefrontController extends AbstractController
         ]);
     }
 
+    public function createOrder(Request $request): Response
+    {
+        $orderId = $this->orderService->saveOrder(
+            $request->get("order_products"),
+            $request->get("order_cost"),
+            $request->get("order_client"),
+            $request->get("order_time"),
+            $request->get("order_address"),
+        );
+        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+    }
     public function createPizza(Request $request): Response
     {
         $pizzaTitle = $request->get("pizza_title");
@@ -78,6 +92,7 @@ class StorefrontController extends AbstractController
         if (!isset($_SESSION['email'])) {
             return $this->redirectToRoute("login_form");
         }
+
         $user = $this->userService->getUserByEmail($_SESSION['email']);
         if ($user === null) {
             return $this->redirectToRoute("login_form");

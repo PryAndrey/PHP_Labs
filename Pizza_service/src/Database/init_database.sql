@@ -43,6 +43,7 @@ CREATE TABLE pizza_order (
  order_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
  order_pizza VARCHAR(500),
  order_client INT UNSIGNED,
+ order_cost INT UNSIGNED,
  order_time DATETIME,
  order_address VARCHAR(200),
  order_delivered INT UNSIGNED NOT NULL

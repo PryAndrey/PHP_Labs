@@ -53,12 +53,18 @@ async function sendOrder(userId) {
     },
     body: JSON.stringify(order)
   });
-
+  // window.location.replace(
+  //   "http://localhost:8000/order/thank"
+  // );
   document.getElementById("orderForm").classList.add('unVisible');
+  document.getElementById("products").innerHTML = "Продукты:"
+  document.getElementById("cost").innerHTML = "Цена: 0Руб"
+  document.getElementById("orderAddress").value = ""
+  for (let pair of products.entries()) {
+    document.getElementById(pair[0]).innerHTML = "В корзине: 0"
+  }
   productString = ""
   products.clear()
   cost = 0
-  document.getElementById("products").innerHTML = "Продукты: -"
-  document.getElementById("cost").innerHTML = "Цена: 0Руб"
-  document.getElementById("orderAddress").value = ""
+  alert("Спасибо за заказ!")
 }

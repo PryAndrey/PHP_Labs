@@ -41,6 +41,10 @@ create_order:
     methods: POST
     controller: App\Controller\StorefrontController::createOrder
 
+show_thank_you_page:
+    path: /order/thank
+    methods: GET
+    controller: App\Controller\StorefrontController::showThankYouPage
 
 
 show_pizza:

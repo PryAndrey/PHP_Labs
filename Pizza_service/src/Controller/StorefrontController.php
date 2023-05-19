@@ -37,6 +37,11 @@ class StorefrontController extends AbstractController
         $contents = $this->twig->render("./form/createPizza.html.twig", []);
         return new Response($contents);
     }
+    public function showThankYouPage(): Response
+    {
+        $contents = $this->twig->render("./order/thankYouPage.html.twig", []);
+        return new Response($contents);
+    }
 
     public function showPizza(int $pizzaId): Response
     {
@@ -50,14 +55,14 @@ class StorefrontController extends AbstractController
     {
         $order = json_decode(file_get_contents('php://input'));
         date_default_timezone_set("Europe/Moscow");
-        $orderTime = $this->orderService->saveOrder(
+        $orderId = $this->orderService->saveOrder(
             $order->products,
             $order->cost,
             $order->client,
             date("FY h:i:s A"),
             $order->address
         );
-        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('show_thank_you_page', [], Response::HTTP_SEE_OTHER);
     }
     public function createPizza(Request $request): Response
     {

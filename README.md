@@ -11,4 +11,5 @@
   <li>1 итерация</li>
   <li>Doctrine</li>
   <li>Image uploading</li>
+  <li>Authorization</li>
 </ul>

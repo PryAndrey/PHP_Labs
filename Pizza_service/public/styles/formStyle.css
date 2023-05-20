@@ -9,10 +9,10 @@
   width: 30%;
 }
 
-
 form {
   display: flex;
-  flex-direction: column;width: 100%;
+  flex-direction: column;
+  width: 100%;
 }
 
 .formItem {

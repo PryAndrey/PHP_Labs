@@ -4,7 +4,7 @@
 }
 
 header {
-  max-height: 205px;
+  height: 100px;
   background: #A7ED43;
   display: flex;
   justify-content: space-between;

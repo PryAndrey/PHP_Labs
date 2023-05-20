@@ -2,9 +2,94 @@
 
 {% block stylesheets %}
 	{{ parent() }}
+	<link rel="stylesheet" href="../styles/formStyle.css"/>
 	<link rel="stylesheet" href="../styles/pizzaCatalogStyle.css">
+	<link rel="stylesheet" href="../styles/pizzaHeaderStyle.css">
 	<link rel="stylesheet" href="../styles/pizzaWrapperStyle.css">
+	<link rel="icon" href="images/pizza.svg">
 	<script type="text/javascript" src="script.js"></script>
+{% endblock %}
+
+{% block header %}
+	<header>
+		<nav>
+
+			<a class="logo" href="{{ path('home') }}">
+				<img src="{{ absolute_url('../images/logo.png') }}" height="40px" alt="logo"/>
+			</a>
+
+			<a class="munuButton munuButton_L" href="{{ path('home') }}">
+				<img src="{{ absolute_url('../images/home.svg') }}" height="40px" alt="home"/>
+				Home
+			</a>
+
+			<a class="munuButton munuButton_R" href="{{ path('home') }}">
+				<img src="{{ absolute_url('../images/menu.svg') }}" height="40px" alt="menu"/>
+				Категории
+			</a>
+
+			{% if user == null %}
+
+				<a class="munuButton" href="{{ path('registration_form') }}">
+					<img src="{{ absolute_url('../images/logo.png') }}" height="40px" alt="logo"/>
+					Регистрация
+				</a>
+
+				<a class="munuButton" href="{{ path('login_form') }}">
+					<img src="{{ absolute_url('../images/logo.png') }}" height="40px" alt="logo"/>
+					Войти
+				</a>
+
+			{% else %}
+				{% if user.getRole() == 2 %}
+					<a class="munuButton" href="{{ path('create_pizza_form') }}">
+						<img src="{{ absolute_url('../images/pizza.svg') }}" height="40px" alt="logo"/>
+						Добавить пиццу
+					</a>
+				{% endif %}
+
+				<div class="basketBlock">
+					<h3>Корзина:</h3>
+					<p id="basket"></p>
+				</div>
+
+				<div id="orderBtn" onclick="orderForm();" class="munuButton unVisibleDisplay">
+					<h4>Собрать заказ</h4>
+				</div>
+
+				<div id="orderFormContainer" class="unVisible">
+					<div onclick="setUnvisible();" id="shading"></div>
+
+					<div class="formContainerWrapper orderForm">
+
+						<h3>Продукты:</h3>
+						<p id="products"></p>
+						<h3>Цена:</h3>
+						<p id="cost"></p>
+						<form>
+							<div class="formItem">
+								<h3>Адресс:</h3>
+								<input type="text" name="orderAddress" id="orderAddress" required>
+							</div>
+							<input onclick="sendOrder({{user.getUserId()}});" type="button" id="sendButton" value="Создать">
+						</form>
+					</div>
+
+				</div>
+
+			{% endif %}
+		</nav>
+		<div>
+			{% include 'user/user_info.html.twig'%}
+
+			<div class="logoutButton">
+				<a href="{{ path('logout') }}">
+					Logout
+				</a>
+			</div>
+
+		</div>
+	</header>
 {% endblock %}
 
 {% block content %}
@@ -36,8 +121,9 @@
 					<div>
 						{% if user != null %}
 							{% if pizza != null %}
-								<button onclick="addProduct('{{pizza.getPizzaTitle()}}',{{pizza.getPizzaCost()}});">Добавить</button>
-								<button onclick="deleteProduct('{{pizza.getPizzaTitle()}}',{{pizza.getPizzaCost()}});">Отменить</button>
+								<button id="addBtn" onclick="addProduct('{{pizza.getPizzaTitle()}}',{{pizza.getPizzaCost()}});">Добавить</button>
+								<button id="delBtn" onclick="deleteProduct('{{pizza.getPizzaTitle()}}',{{pizza.getPizzaCost()}});">Отменить</button>
+
 							{% endif %}
 						{% else %}
 							<a href="{{ path('login') }}">Необходимо авторизироваться</a>

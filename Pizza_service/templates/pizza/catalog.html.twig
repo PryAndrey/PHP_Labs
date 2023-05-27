@@ -13,73 +13,63 @@
 {% block header %}
 	<header>
 		<nav>
-
 			<a class="logo" href="{{ path('home') }}">
-				<img src="{{ absolute_url('../images/logo.png') }}" height="40px" alt="logo"/>
+				<img src="{{ absolute_url('../images/logo.png') }}" alt="logo"/>
+				<h1>Pizza-service</h1>
 			</a>
-
-			<a class="munuButton munuButton_L" href="{{ path('home') }}">
-				<img src="{{ absolute_url('../images/home.svg') }}" height="40px" alt="home"/>
-				Home
-			</a>
-
-			<a class="munuButton munuButton_R" href="{{ path('home') }}">
-				<img src="{{ absolute_url('../images/menu.svg') }}" height="40px" alt="menu"/>
-				Категории
-			</a>
-
-			{% if user == null %}
-
-				<a class="munuButton" href="{{ path('registration_form') }}">
-					<img src="{{ absolute_url('../images/logo.png') }}" height="40px" alt="logo"/>
-					Регистрация
+			<div class="munuButtonBlock">
+				<a class="munuButton munuButton_L" href="{{ path('home') }}">
+					<img src="{{ absolute_url('../images/home.svg') }}" alt="home"/>
+					Home
 				</a>
+				{% if user.getRole() == 1 %}
+					<a class="munuButton munuButton_R" href="{{ path('home') }}">
+						<img src="{{ absolute_url('../images/menu.svg') }}" alt="menu"/>
+						Категории
+					</a>
+				{% else %}
+					<a class="munuButton munuButton_C" href="{{ path('home') }}">
+						<img src="{{ absolute_url('../images/menu.svg') }}" alt="menu"/>
+						Категории
+					</a>
 
-				<a class="munuButton" href="{{ path('login_form') }}">
-					<img src="{{ absolute_url('../images/logo.png') }}" height="40px" alt="logo"/>
-					Войти
-				</a>
-
-			{% else %}
-				{% if user.getRole() == 2 %}
-					<a class="munuButton" href="{{ path('create_pizza_form') }}">
-						<img src="{{ absolute_url('../images/pizza.svg') }}" height="40px" alt="logo"/>
+					<a class="munuButton munuButton_R" href="{{ path('create_pizza_form') }}">
+						<img src="{{ absolute_url('../images/pizza.svg') }}" alt="logo"/>
 						Добавить пиццу
 					</a>
 				{% endif %}
+			</div>
 
-				<div class="basketBlock">
+			<div class="basketBlock">
+				<div class="basket">
 					<h3>Корзина:</h3>
 					<p id="basket"></p>
 				</div>
-
-				<div id="orderBtn" onclick="orderForm();" class="munuButton unVisibleDisplay">
+				<div id="orderBtn" onclick="orderForm({{user.getUserId()}});" class="munuButton unVisibleDisplay">
 					<h4>Собрать заказ</h4>
 				</div>
+			</div>
+			<div id="orderFormContainer" class="unVisible">
+				<div onclick="setUnvisible();" id="shading"></div>
 
-				<div id="orderFormContainer" class="unVisible">
-					<div onclick="setUnvisible();" id="shading"></div>
+				<div class="formContainerWrapper orderForm">
 
-					<div class="formContainerWrapper orderForm">
+					<h3>Продукты:</h3>
+					<p id="products"></p>
+					<h3>Цена:</h3>
+					<p id="cost"></p>
+					<form id="sendOrderForm" action="/order/create" method="post">
 
-						<h3>Продукты:</h3>
-						<p id="products"></p>
-						<h3>Цена:</h3>
-						<p id="cost"></p>
-						<form>
-							<div class="formItem">
-								<h3>Адресс:</h3>
-								<input type="text" name="orderAddress" id="orderAddress" required>
-							</div>
-							<input onclick="sendOrder({{user.getUserId()}});" type="button" id="sendButton" value="Создать">
-						</form>
-					</div>
-
+						<div class="formItem">
+							<h3>Адресс:</h3>
+							<input type="text" name="address" id="orderAddress" required>
+						</div>
+						<input class="submit" type="submit" value="Заказать">
+					</form>
 				</div>
-
-			{% endif %}
+			</div>
 		</nav>
-		<div>
+		<div class="userBlock">
 			{% include 'user/user_info.html.twig'%}
 
 			<div class="logoutButton">
@@ -98,40 +88,44 @@
 		<div class="assortimentBlock">
 			{% for pizza in pizzas_list %}
 				<div class="assortimentItem">
-					<img src="{{pizza.getUploadUrlPath(pizza.getPizzaImage())}}" alt='ava'>
-					<div class="pizzaInfo">
-						<h1 class="pizzaInfo_title">
-							{{pizza.getPizzaTitle()}}
-						</h1>
-						<h3 class="pizzaInfo_structure">
-							{{pizza.getPizzaStructure()}}
-						</h3>
-						<h3 class="pizzaInfo_description">
-							{{pizza.getPizzaDescription()}}
-						</h3>
-						<h2 class="pizzaInfo_cost">
-							{{pizza.getPizzaCost()}}
-						</h2>
-						<h2 id="{{pizza.getPizzaTitle()}}">
+					<div class="assortimentItem_leftBlock">
+						<img src="{{pizza.getUploadUrlPath(pizza.getPizzaImage())}}" alt='ava'>
+						<h2 class="pizzaInfo_basket" id="{{pizza.getPizzaTitle()}}">
 							В корзине: 0
 						</h2>
-
 					</div>
 
-					<div>
-						{% if user != null %}
-							{% if pizza != null %}
-								<button id="addBtn" onclick="addProduct('{{pizza.getPizzaTitle()}}',{{pizza.getPizzaCost()}});">Добавить</button>
-								<button id="delBtn" onclick="deleteProduct('{{pizza.getPizzaTitle()}}',{{pizza.getPizzaCost()}});">Отменить</button>
-
+					<div class="pizzaInfoBlock">
+						<div class="pizzaInfo">
+							<h1 class="pizzaInfo_title">
+								{{pizza.getPizzaTitle()}}
+							</h1>
+							<h3 class="pizzaInfo_structure">
+								{{pizza.getPizzaStructure()}}
+							</h3>
+							<h3 class="pizzaInfo_description">
+								{{pizza.getPizzaDescription()}}
+							</h3>
+							<h2 class="pizzaInfo_cost">
+								{{pizza.getPizzaCost()}}руб
+							</h2>
+						</div>
+						<div class="button_block">
+							{% if user != null %}
+								{% if pizza != null %}
+									<div id="addBtn" onclick="addProduct('{{pizza.getPizzaTitle()}}',{{pizza.getPizzaCost()}});">Добавить</div>
+									<div id="delBtn" onclick="deleteProduct('{{pizza.getPizzaTitle()}}',{{pizza.getPizzaCost()}});">Отменить</div>
+								{% endif %}
+							{% else %}
+								<a href="{{ path('login') }}">Необходимо авторизироваться</a>
 							{% endif %}
-						{% else %}
-							<a href="{{ path('login') }}">Необходимо авторизироваться</a>
-						{% endif %}
-						{% if user.getRole() == 2 %}
-							<a href="{{ path('delete_pizza', {pizzaId: pizza.getPizzaId() }) }}">Удалить</a>
-						{% endif %}
+							{% if user.getRole() == 2 %}
+								<a id="removePizzaBtn" href="{{ path('delete_pizza', {pizzaId: pizza.getPizzaId() }) }}">Удалить</a>
+							{% endif %}
+						</div>
+
 					</div>
+
 				</div>
 			{% endfor %}
 

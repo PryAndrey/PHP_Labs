@@ -37,6 +37,10 @@
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
+.profile_info>p {
+  white-space: nowrap
+}
+
 .profile_avatar {
   width: 76px;
   height: 76px;
@@ -58,61 +62,118 @@
   border: 3px solid #A7ED43;
   border-radius: 24px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
-  max-width: 220px;
-  max-height: 525px;
+  max-width: 440px;
+  /* max-height: 525px; */
   background: #FFFFFF;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding: 18px;
+  padding: 20px;
+  gap: 20px;
 }
 
-.assortimentItem>img {
+.assortimentItem_leftBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.assortimentItem_leftBlock>img {
   width: 200px;
   height: 200px;
+}
+
+.pizzaInfoBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .pizzaInfo {
   display: flex;
   flex-direction: column;
   width: 100%;
+  gap: 5px;
 }
 
 .pizzaInfo_title {
-  margin-top: 12px;
-  font-family: 'Oxygen';
   font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  color: #000000;
+  font-size: 30px;
+  font-family: math;
+  color: #ff9737;
 }
 
 .pizzaInfo_structure {
-  margin-top: 8px;
   font-family: 'Oxygen';
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 25px;
+  font-family: math;
   color: #626262;
 }
 
 .pizzaInfo_description {
-  margin-top: 8px;
-  font-family: 'Oxygen';
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 25px;
+  font-family: math;
   color: #626262;
 }
 
 .pizzaInfo_cost {
-  margin-top: 8px;
-  font-family: 'Oxygen';
   font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
+  font-size: 25px;
   line-height: 25px;
+  font-family: math;
+}
+
+.pizzaInfo_basket {
+  font-style: normal;
+  font-size: 25px;
+  line-height: 25px;
+  font-family: math;
   color: #626262;
+}
+
+.button_block {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  user-select: none;
+}
+
+#addBtn {
+  cursor: pointer;
+  background-color: #A7ED43;
+  border: 3px solid #A7ED43;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+#delBtn {
+  cursor: pointer;
+  background-color: #fea2a2;
+  border: 3px solid #fea2a2;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+#delBtn {
+  cursor: pointer;
+  background-color: #fea2a2;
+  border: 3px solid #fea2a2;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+#removePizzaBtn {
+  cursor: pointer;
+  background-color: #ff2727;
+  border: 3px solid #ff2727;
+  color: #000000;
+  border-radius: 5px;
+  padding: 2px;
+  text-decoration: none;
 }

@@ -29,6 +29,14 @@ nav {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 20px;
+
+}
+
+.munuButtonBlock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .munuButton {
@@ -50,6 +58,10 @@ nav {
   border-radius: 24px 0 0 24px;
 }
 
+.munuButton_C {
+  border-radius: 0;
+}
+
 .munuButton_R {
   border-radius: 0 24px 24px 0;
 }
@@ -66,6 +78,14 @@ nav {
 }
 
 .basketBlock {
+  display: flex;
+  flex-direction: row;
+  min-width: 30%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.basket {
   height: fit-content;
   width: 100px;
   border: 2px solid rgb(85, 167, 22);
@@ -73,19 +93,26 @@ nav {
   padding: 5px 5px 7px 5px;
 }
 
-.basketBlock>p {
+.basket>p {
   overflow: overlay;
   max-height: 55px;
 }
 
 .logo {
-  width: 50px;
-  height: 50px;
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  align-items: end;
 }
 
 .logo>img {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
+}
+
+.logo>h1 {
+  color: rgb(227, 164, 27);
+  font-size: 30px;
 }
 
 .logoutButton {
@@ -112,17 +139,45 @@ nav {
   display: none;
 }
 
-.basketBlock>p::-webkit-scrollbar {
+.basket>p::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
-.basketBlock>p::-webkit-scrollbar-thumb {
+.basket>p::-webkit-scrollbar-thumb {
   background-color: rgb(85, 167, 22);
   border-radius: 4px;
   border: 1px solid #A7ED43;
 }
 
-.basketBlock>p::-webkit-scrollbar-track {
+.basket>p::-webkit-scrollbar-track {
   background: #A7ED43;
+}
+
+.userBlock {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  overflow-x: scroll;
+}
+
+.userBlock::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.userBlock::-webkit-scrollbar-thumb {
+  background-color: rgb(85, 167, 22);
+  border-radius: 4px;
+  border: 1px solid #A7ED43;
+}
+
+.userBlock::-webkit-scrollbar-track {
+  background: #A7ED43;
+}
+
+@media screen and (max-width: 1150px) {
+  nav {
+    flex-direction: column;
+  }
 }

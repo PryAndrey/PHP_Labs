@@ -8,6 +8,14 @@ header {
   background: #A7ED43;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 1150px) {
+  header {
+    height: 250px;
+    justify-content: space-evenly;
+  }
 }
 
 main {

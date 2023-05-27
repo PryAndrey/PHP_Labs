@@ -53,14 +53,13 @@ class StorefrontController extends AbstractController
 
     public function createOrder(Request $request): Response
     {
-        $order = json_decode(file_get_contents('php://input'));
         date_default_timezone_set("Europe/Moscow");
         $orderId = $this->orderService->saveOrder(
-            $order->products,
-            $order->cost,
-            $order->client,
+            $request->get('products'),
+            (int)$request->get('cost'),
+            (int)$request->get('client'),
             date("FY h:i:s A"),
-            $order->address
+            $request->get('address')
         );
         return $this->redirectToRoute('show_thank_you_page', [], Response::HTTP_SEE_OTHER);
     }

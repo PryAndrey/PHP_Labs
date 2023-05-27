@@ -1,7 +1,7 @@
-var products = new Map()
-var cost = 0
-var productString = ""
-var basketString = ""
+let products = new Map()
+let cost = 0
+let productString = ""
+let basketString = ""
 
 function showBasket() {
   basketString = "";
@@ -46,7 +46,15 @@ function setUnvisible() {
   document.getElementById("orderFormContainer").classList.add('unVisible');
 }
 
-function orderForm() {
+function addHiddenInput(orderForm, name, value) {
+  let input = document.createElement("input");
+  input.type = "hidden";
+  input.name = name;
+  input.value = value;
+  orderForm.appendChild(input);
+}
+
+function orderForm(userId) {
   if (products.size > 0) {
 
     document.getElementById("orderFormContainer").classList.remove('unVisible');
@@ -56,26 +64,11 @@ function orderForm() {
     }
     document.getElementById("products").innerHTML = showBasket();
     document.getElementById("cost").innerHTML = "Цена: " + cost + "Руб";
+    let orderForm = document.getElementById("sendOrderForm");
+    addHiddenInput(orderForm, 'products', productString)
+    addHiddenInput(orderForm, 'cost', cost)
+    addHiddenInput(orderForm, 'client', userId)
+    console.log(orderForm)
   }
 }
 
-async function sendOrder(userId) {
-  let address = document.getElementById("orderAddress").value;
-  console.log(address.includes(' ', 0))
-  if (!address.includes(' ', 0) && address !== '') {
-    order = {
-      "products": productString,
-      "cost": cost,
-      "client": userId,
-      "address": address,
-    }
-    let response = await fetch('http://localhost:8000/order/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: JSON.stringify(order)
-    });
-    window.location.replace(response.url); // через контроллер не работает, поэтому переадресация здесь (спросить и исправить)
-  }
-}

@@ -12,4 +12,5 @@
   <li>Doctrine</li>
   <li>Image uploading</li>
   <li>Authorization</li>
+  <li>Сборка заказа</li>
 </ul>
